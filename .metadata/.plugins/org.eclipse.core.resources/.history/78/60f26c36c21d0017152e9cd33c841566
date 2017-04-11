@@ -1,0 +1,11 @@
+import java.util.ArrayList;
+
+public class Main {
+	public static void main(String[] args){
+		String url = "https://www.zhihu.com/explore/recommendations";
+		String content = Spider.sendGet(url);
+//		System.out.println(result);
+		ArrayList<Zhihu> myZhihu = Spider.GetRecommendations(content);
+		System.out.println(myZhihu);
+	}
+}

@@ -1,0 +1,29 @@
+import java.io.*;
+import java.net.*;
+
+public class Main {
+	public static void main(String[] args){
+		String url = "http://www.baidu.com";
+		String result = "";
+		BufferedReader in = null;
+		try{
+			URL readUrl = new URL(url);
+			URLConnection connection = readUrl.openConnection();
+			connection.connect();
+			in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			String line;
+			while ((line = in.readLine()) != null) result += line;
+		}catch (Exception e){
+			System.out.println("发送GET请求出现异常!" + e);
+			e.printStackTrace();
+		}
+		finally{
+			try{
+				if (in != null) in.close();
+			}catch (Exception e2){
+				e2.printStackTrace();
+			}
+		}
+		System.out.println(result);
+	}
+}

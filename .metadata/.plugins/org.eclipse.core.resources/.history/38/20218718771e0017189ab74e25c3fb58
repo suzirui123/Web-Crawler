@@ -1,0 +1,5 @@
+package crawl;
+
+public abstract class CrawlBase {
+
+}

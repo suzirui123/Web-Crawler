@@ -1,0 +1,10 @@
+import java.awt.*;
+import java.io.*;
+import javax.swing.*;
+/**
+ * @author Invoker
+ *
+ */
+public class ImageViewer{
+	
+}
