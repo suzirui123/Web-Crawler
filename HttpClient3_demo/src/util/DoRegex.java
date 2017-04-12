@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 public class DoRegex {
 	private static String rootUrlRegex = "(http://.*?/)";
 	private static String currentUrlRegex = "(http://.*/)";
-	private static String chRegex = "([\u4e00-\u9fa5]+)";
+	private static String ChRegex = "([\u4e00-\u9fa5]+)";
 	
 	public static String getString(String dealStr, String regexStr, String splitStr, int n){
 		String reStr = "";
@@ -50,7 +50,7 @@ public class DoRegex {
 	
 	private static String getHttpUrl(String url, String currentUrl){
 		try{
-			url = encoderUrlCh(url);
+			url = encodeUrlCh(url);
 		}catch (UnsupportedEncodingException e){
 			e.printStackTrace();
 		}
@@ -66,5 +66,66 @@ public class DoRegex {
 		Matcher matcher = pattern.matcher(dealStr);
 		while (matcher.find()) reArrayList.add(getHttpUrl(matcher.group(n).trim(), currentUrl));
 		return reArrayList;
+	}
+	
+	public static String encodeUrlCh(String url) throws UnsupportedEncodingException{
+		while (true){
+			String s = getFirstString(url, ChRegex, 1);
+			if ("".equals(s)) return url;
+			url = url.replaceAll(s, URLEncoder.encode(s, "utf-8"));
+		}
+	}
+	
+	public static List<String[]> getListArray(String dealStr, String regexStr, int[] array){
+		List<String[]> reArrayList = new ArrayList<String[]>();
+		if (dealStr == null || regexStr == null || array == null) return reArrayList;
+		for (int i=0; i<array.length; i++){
+			if (array[i] < 1) return reArrayList;
+		}
+		Pattern pattern = Pattern.compile(regexStr, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+		Matcher matcher = pattern.matcher(dealStr);
+		while (matcher.find()){
+			String[] ss = new String[array.length];
+			for (int i=0; i<array.length; i++){
+				ss[i] = matcher.group(array[i]).trim();
+			}
+			reArrayList.add(ss);
+		}
+		return reArrayList;
+	}
+	
+	public static List<String> getStringArray(String dealStr, String regexStr, int[] array){
+		List<String> reStringList = new ArrayList<String>();
+		if (dealStr == null || regexStr == null || array == null) return reStringList;
+		for (int i=0; i<array.length; i++){
+			if (array[i] < 1) return reStringList;
+		}
+		Pattern pattern = Pattern.compile(regexStr, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+		Matcher matcher = pattern.matcher(dealStr);
+		while (matcher.find()){
+			StringBuffer sb = new StringBuffer();
+			for (int i=0; i<array.length; i++){
+				sb.append(matcher.group(array[i]).trim());
+			}
+			reStringList.add(sb.toString());
+		}
+		return reStringList;
+	}
+	
+	public static String[] getFirstArray(String dealStr, String regexStr, int[] array){
+		if (dealStr == null || regexStr == null || array == null) return null;
+		for (int i=0; i<array.length; i++){
+			if (array[i] < 1) return null;
+		}
+		Pattern pattern = Pattern.compile(regexStr, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+		Matcher matcher = pattern.matcher(dealStr);
+		while (matcher.find()){
+			String[] ss = new String[array.length];
+			for (int i=0; i<array.length; i++){
+				ss[i] = matcher.group(array[i]).trim();
+			}
+			return ss;
+		}
+		return null;
 	}
 }

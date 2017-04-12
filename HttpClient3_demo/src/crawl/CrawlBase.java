@@ -16,6 +16,7 @@ import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.log4j.Logger;
+import util.CharsetUtil;
 
 public abstract class CrawlBase {
 	private static Logger log = Logger.getLogger(CrawlBase.class);
@@ -55,7 +56,7 @@ public abstract class CrawlBase {
 		return postMethod;
 	}
 
-	private boolean readPageByGet(String urlStr, String charsetName, HashMap<String, String> params) throws HttpException, IOException{
+	public boolean readPageByGet(String urlStr, String charsetName, HashMap<String, String> params) throws HttpException, IOException{
 		GetMethod getMethod = createGetMethod(urlStr, params);
 		return readPage(getMethod, charsetName, urlStr);
 	}

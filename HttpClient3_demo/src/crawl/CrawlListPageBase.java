@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+import util.DoRegex;
 
 public abstract class CrawlListPageBase extends CrawlBase {
 	private String pageurl;
@@ -21,7 +21,7 @@ public abstract class CrawlListPageBase extends CrawlBase {
 	
 	public List<String> getPageUrls(){
 		List<String> pageUrls = new ArrayList<String>();
-		pageUrls = DoRegex.getArrayList(getPageResourceCode, getUrlRegexString(), pageurl, getUrlRegexStringNum());
+		pageUrls = DoRegex.getArrayList(getPageSourceCode(), getUrlRegexString(), pageurl, getUrlRegexStringNum());
 		return pageUrls;
 	}
 	
